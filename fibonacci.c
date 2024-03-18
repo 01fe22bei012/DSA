@@ -1,30 +1,41 @@
 #include <stdio.h>
-
-int fibonacci(int n)
-{
-    if (n <= 1)
-    {
-        return n;
-    }
-    else
-    {
-        return fibonacci(n - 1) + fibonacci(n - 2);
-    }
-}
-
 int main()
 {
-    int t;
+    int N;
+    int a=0, b=1;
+    int c;
+    int i;
 
-    printf("Enter the number of terms in the Fibonacci series: ");
-    scanf("%d", &t);
-
-    printf("Fibonacci Series: ");
-    for (int i = 0; i < t; i++)
+    // Read upper limit from input.txt
+    FILE *inputFile = fopen("input.txt", "r");
+    if (inputFile == NULL)
     {
-       int fib=fibonacci(i);
-       printf("%d ",fib);
+        printf("Error: Unable to open input.txt for reading.\n");
+        return 1;
     }
+    fscanf(inputFile, "%d", &N);
+    fclose(inputFile);
+
+    // Write Fibonacci sequence to output.txt
+    FILE *outputFile = fopen("output.txt", "w");
+    if (outputFile == NULL)
+    {
+        printf("Error: Unable to open output.txt for writing.\n");
+        return 1;
+    }
+
+    fprintf(outputFile, "%d\n", a);
+    fprintf(outputFile, "%d\n", b);
+
+    for (i=1; i<N; i++)
+    {
+        c = a+b;
+        fprintf(outputFile, "%d\n", c);
+        a = b;
+        b = c;
+    }
+
+    fclose(outputFile);
 
     return 0;
 }
